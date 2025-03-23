@@ -5,6 +5,7 @@
 
 
 #include "Message.h"
+#include "SharedState.h"
 
 
 class MemWritter final {
@@ -17,15 +18,16 @@ public:
 
   int getSharedBufferId() const;
 
-  void * getPtr();
+  int write(const void * data, size_t size);
 
+  void writeDone();
 
 private:
   int buffer_id_;
   void * ptr_;
-
+  SharedState * state_;
+  void * temp_pos_;
 };
 
 inline int MemWritter::getSharedBufferId() const { return buffer_id_; };
 
-inline void * MemWritter::getPtr() { return ptr_; }
