@@ -2,7 +2,7 @@
 
 #include <cstdint>
 #include <span>
-#include <sys/mman.h>
+
 
 #include "Message.h"
 
@@ -13,14 +13,19 @@ public:
 
   ~MemWritter();
 
+  bool allocateBuffer(size_t size);
+
   int getSharedBufferId() const;
 
-  int write(const uint8_t* data, size_t size);
+  void * getPtr();
+
 
 private:
   int buffer_id_;
+  void * ptr_;
 
 };
 
 inline int MemWritter::getSharedBufferId() const { return buffer_id_; };
 
+inline void * MemWritter::getPtr() { return ptr_; }
