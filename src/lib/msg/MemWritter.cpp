@@ -48,9 +48,10 @@ int MemWritter::write(const void * data, size_t size) {
     // TODO: add some logs
     return -1;
   }
-  if (reinterpret_cast<uint8_t*>(state_->pos) + size < state_->data + size) {
-    memcpy(state_->pos, data, size);
+  if (reinterpret_cast<uint8_t*>(state_->pos) + size >= state_->data + size) {
+    state_->pos = state_->data;
   }
+  memcpy(state_->pos, data, size);
 }
 
 void MemWritter::writeDone() {
